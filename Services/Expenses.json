@@ -1,0 +1,339 @@
+{
+    "name": "Expenses api",
+    "includes": ["BaseService.json"],
+    "operations": {
+        "getExpenses": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/expenses",
+            "summary": "Get list of expenses. To only get entities after or on a specific date use query string fromDate=YYYY-MM-DD. To only get entities from before or on a date use query string toDate=YYYY-MM-DD.",
+            "parameters": {
+                "fromDate": {
+                    "location": "query",
+                    "summary": "format YYYY-MM-DD",
+                    "type": "string"
+                },
+                "toDate": {
+                    "location": "query",
+                    "summary": "format YYYY-MM-DD",
+                    "type": "string"
+                }
+            }
+        },
+        "createExpense": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/expenses",
+            "summary": "Create new expense.",
+            "parameters": {
+                "autonumber": {
+                    "location": "query",
+                    "description": "If you specify ?autonumber=true in the query string, the customer will be given a number based on the current value of customerSettings.lastCustomerNumber, in settings.",
+                    "type": "boolean"
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "description": {
+                    "location": "json",
+                    "description": "The description of my expense",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "Coffee"
+                },
+                "date": {
+                    "location": "json",
+                    "description": "The expense date",
+                    "required": true,
+                    "type": "string",
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "fileId": {
+                    "location": "json",
+                    "description": "Id of the file attachment for this expense. Must be a file id",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "503714a74400b29809000004"
+                },
+                "supplierId": {
+                    "location": "json",
+                    "description": "Id of the supplier for this expense. Must be a valid supplier id",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "503714a74400b29809000004"
+                },
+                "supplierName": {
+                    "location": "json",
+                    "description": "Name of supplier on expense",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Acme inc"
+                },
+                "supplierCountry": {
+                    "location": "json",
+                    "description": "Country code supplier. Must be valid country code",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "DK"
+                },
+                "payments": {
+                    "location": "json",
+                    "type": ["object", "null"],
+                    "required": false
+                },
+                "createdFromEmail": {
+                    "location": "json",
+                    "description": "true if expense was created from email",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "readonly": true,
+                    "example": true
+                },
+                "totalGrossAmount": {
+                    "location": "json",
+                    "description": "Summary total gross amount for all lines, calculates on server",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "number"],
+                    "example": 500
+                },
+                "totalNetAmount": {
+                    "location": "json",
+                    "description": "Total net amount for expense",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 0
+                },
+                "totalTaxAmount": {
+                    "location": "json",
+                    "description": "Total tax amount for expense. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 0
+                },
+                "unpaidAmount": {
+                    "location": "json",
+                    "description": "Unpaid amount for expense. This will be re-calculated when posted to the server",
+                    "readonly": true,
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "minimal": 0,
+                    "example": 0
+                },
+                "currency": {
+                    "location": "json",
+                    "description": "Defines expense currency, is always set to you account-currency",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "EUR"
+                },
+                "taxGroups": {
+                    "location": "json",
+                    "description": "tax groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "lines": {
+                    "location": "json",
+                    "description": "Expenses lines",
+                    "required": true,
+                    "type": "array"
+                },
+                "incomeTaxDeductionAmount": {
+                    "location": "json",
+                    "description": "The total income tax deduction for all the lines on the expense. You can only submit a value here if you are in ES, IT, IC or CO",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 100
+                }
+            }
+        },
+        "getExpense": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/expenses/{expense_id}",
+            "summary": "Get customer by ID.",
+            "parameters": {
+                "expense_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "updateExpense": {
+            "extends": "abstract.put",
+            "uri": "/api/v1.0/expenses/{expense_id}",
+            "summary": "If you want to update an expense that has payments, and the new totalGrossAmount you are updating to is less than the payments registered on the expense, then you need to delete all the cash payments on the expense and unmatch all the bank transactions matched on the expense. You do this by deleting the payments property on the expense before PUTting it and as a safety-precaution you need to specify ?allowUnmatch=true in the query string. This will delete any cash payments and unmatch any matched bank transactions on the expense.",
+            "parameters": {
+                "expense_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "allowUnmatch": {
+                    "location": "query",
+                    "type": "boolean"
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "description": {
+                    "location": "json",
+                    "description": "The description of my expense",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "Coffee"
+                },
+                "date": {
+                    "location": "json",
+                    "description": "The expense date",
+                    "required": true,
+                    "type": "string",
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "fileId": {
+                    "location": "json",
+                    "description": "Id of the file attachment for this expense. Must be a file id",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "503714a74400b29809000004"
+                },
+                "supplierId": {
+                    "location": "json",
+                    "description": "Id of the supplier for this expense. Must be a valid supplier id",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "503714a74400b29809000004"
+                },
+                "supplierName": {
+                    "location": "json",
+                    "description": "Name of supplier on expense",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Acme inc"
+                },
+                "supplierCountry": {
+                    "location": "json",
+                    "description": "Country code supplier. Must be valid country code",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "DK"
+                },
+                "payments": {
+                    "location": "json",
+                    "type": ["object", "null"],
+                    "required": false
+                },
+                "createdFromEmail": {
+                    "location": "json",
+                    "description": "true if expense was created from email",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "readonly": true,
+                    "example": true
+                },
+                "totalGrossAmount": {
+                    "location": "json",
+                    "description": "Summary total gross amount for all lines, calculates on server",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "number"],
+                    "example": 500
+                },
+                "totalNetAmount": {
+                    "location": "json",
+                    "description": "Total net amount for expense",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 0
+                },
+                "totalTaxAmount": {
+                    "location": "json",
+                    "description": "Total tax amount for expense. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 0
+                },
+                "unpaidAmount": {
+                    "location": "json",
+                    "description": "Unpaid amount for expense. This will be re-calculated when posted to the server",
+                    "readonly": true,
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "minimal": 0,
+                    "example": 0
+                },
+                "currency": {
+                    "location": "json",
+                    "description": "Defines expense currency, is always set to you account-currency",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "EUR"
+                },
+                "taxGroups": {
+                    "location": "json",
+                    "description": "tax groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "lines": {
+                    "location": "json",
+                    "description": "Expenses lines",
+                    "required": true,
+                    "type": "array"
+                },
+                "incomeTaxDeductionAmount": {
+                    "location": "json",
+                    "description": "The total income tax deduction for all the lines on the expense. You can only submit a value here if you are in ES, IT, IC or CO",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 100
+                }
+            }
+        },
+        "deleteExpense": {
+            "extends": "abstract.delete",
+            "uri": "/api/v1.0/expenses/{expense_id}",
+            "summary": "Create new customer.",
+            "parameters": {
+                "expense_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "allowUnmatch": {
+                    "location": "query",
+                    "type": "boolean"
+                }
+            }
+        },
+        "exportExpenses": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/expenses/export.csv",
+            "summary": "Export expenses as csv"
+        }
+    }
+}

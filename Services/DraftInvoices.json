@@ -1,0 +1,641 @@
+{
+    "name": "Draft invoices api",
+    "includes": ["BaseService.json"],
+    "operations": {
+        "createDraftInvoice": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/sales/draftinvoices",
+            "summary": "Create new expense.",
+            "parameters": {
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "number": {
+                    "location": "json",
+                    "description": "The number of the invoice",
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "minimum": 1,
+                    "example": 1
+                },
+                "type": {
+                    "location": "json",
+                    "description": "Type of invoice/creditNote",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["string", "null"],
+                    "enum": ["invoice", "creditNote"],
+                    "example": "invoice"
+                },
+                "customerId": {
+                    "location": "json",
+                    "description": "Id of the customer for this invoice. Must be a valid customer id",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "503714a74400b29809000004"
+                },
+                "notes": {
+                    "location": "json",
+                    "description": "Notes for the invoice",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My note"
+                },
+                "additionalNotes": {
+                    "location": "json",
+                    "description": "Additional invoice notes",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Some notes"
+                },
+                "date": {
+                    "location": "json",
+                    "description": "Date of invoice",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "dueDate": {
+                    "location": "json",
+                    "description": "Date invoice is due for payment",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "paymentTermsId": {
+                    "location": "json",
+                    "description": "Id of actual payment terms for this invoice. Must be valid payment terms id",
+                    "required": true,
+                    "type": "integer",
+                    "example": 1
+                },
+                "customPaymentTermsDays": {
+                    "location": "json",
+                    "description": "Days for custom payment terms, required for custom payment terms",
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "minimum": 0,
+                    "example": 1
+                },
+                "customerName": {
+                    "location": "json",
+                    "description": "Name of customer on invoice",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Acme inc"
+                },
+                "customerAddress": {
+                    "location": "json",
+                    "description": "Full address of customer on invoice, excluding country",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My street, 42\n2665 Vallensbaek Strand"
+                },
+                "customerCountry": {
+                    "location": "json",
+                    "description": "Country code of customer on invoice. Must be valid country code",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "DK"
+                },
+                "customerCountryName": {
+                    "location": "json",
+                    "description": "Localized name of country for customer on invoice. Calculated by the server based on the value of customerCountry.",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["string", "null"],
+                    "example": "Denmark"
+                },
+                "customerCiNumber": {
+                    "location": "json",
+                    "description": "VAT/Company number of customer on invoice, if an invoice has both this is the Company number",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "10067855"
+                },
+                "customerVatNumber": {
+                    "location": "json",
+                    "description": "The VAT number of customer on invoice",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "currency": {
+                    "location": "json",
+                    "description": "Defines invoice currency. Will be set to the currency valid for your account",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "EUR"
+                },
+                "priceDisplayType": {
+                    "location": "json",
+                    "description": "If set to gross, the price on lines will be displayed as the gross price on the debitoor website, and in PDFs generated. The price saved in lines.unitNetPrice should always be net",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "pattern": "gross|net|noTax",
+                    "example": "gross"
+                },
+                "sent": {
+                    "location": "json",
+                    "description": "Has the invoice been sent by email",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": false
+                },
+                "viewed": {
+                    "location": "json",
+                    "description": "Defines if invoice has been viewed on the portal or not",
+                    "required": false,
+                    "type": ["null", "boolean"]
+                },
+                "creditedInvoiceId": {
+                    "location": "json",
+                    "description": "Original invoice Id for creditNotes",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "creditedInvoiceNumber": {
+                    "location": "json",
+                    "description": "The number of the original invoice for credit notes. Will be looked up from creditedInvoiceId",
+                    "readonly": true,
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "example": 1
+                },
+                "creditedInvoiceDate": {
+                    "location": "json",
+                    "description": "Date of the original invoice for credit notes. Will be looked up from creditedInvoiceId",
+                    "readonly": true,
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "lines": {
+                    "location": "json",
+                    "description": "Array of lines on the invoice",
+                    "required": true,
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "discountRate": {
+                    "location": "json",
+                    "description": "Invoice discount rate, %",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "minimum": 0,
+                    "maximum": 100,
+                    "example": 43
+                },
+                "totalNetAmountBeforeDiscount": {
+                    "location": "json",
+                    "description": "Total net amount before discount(if any) for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalNetDiscountAmount": {
+                    "location": "json",
+                    "description": "Total net discount amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalNetAmount": {
+                    "location": "json",
+                    "description": "Total net amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalTaxAmount": {
+                    "location": "json",
+                    "description": "Total tax amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "taxGroups": {
+                    "location": "json",
+                    "description": "Tax groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "totalNetDeductionAmount": {
+                    "location": "json",
+                    "description": "ES,IC,IT,CO: total Deduction amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "incomeTaxDeductionGroups": {
+                    "location": "json",
+                    "description": "Net deduction groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "totalGrossAmount": {
+                    "location": "json",
+                    "description": "Total amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                }
+            }
+        },
+        "getDraftInvoice": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/draftinvoices/{draftinvoice_id}",
+            "summary": "Get draft invoice by ID. expand=customer,product Expand associated customer data and/or product data for every line (if available).",
+            "parameters": {
+                "draftinvoice_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "expand": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
+        },
+        "deleteDraftInvoice": {
+            "extends": "abstract.delete",
+            "uri": "/api/v1.0/sales/draftinvoices/{draftinvoice_id}",
+            "summary": "Delete draft invoice.",
+            "parameters": {
+                "draftinvoice_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "updateDraftInvoice": {
+            "extends": "abstract.put",
+            "uri": "/api/v1.0/sales/draftinvoices/{draftinvoice_id}",
+            "summary": "Update draft invoice. expand=customer,product Expand associated customer data and/or product data for every line (if available).",
+            "parameters": {
+                "draftinvoice_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "expand": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "number": {
+                    "location": "json",
+                    "description": "The number of the invoice",
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "minimum": 1,
+                    "example": 1
+                },
+                "type": {
+                    "location": "json",
+                    "description": "Type of invoice/creditNote",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["string", "null"],
+                    "enum": ["invoice", "creditNote"],
+                    "example": "invoice"
+                },
+                "customerId": {
+                    "location": "json",
+                    "description": "Id of the customer for this invoice. Must be a valid customer id",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "503714a74400b29809000004"
+                },
+                "notes": {
+                    "location": "json",
+                    "description": "Notes for the invoice",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My note"
+                },
+                "additionalNotes": {
+                    "location": "json",
+                    "description": "Additional invoice notes",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Some notes"
+                },
+                "date": {
+                    "location": "json",
+                    "description": "Date of invoice",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "dueDate": {
+                    "location": "json",
+                    "description": "Date invoice is due for payment",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "paymentTermsId": {
+                    "location": "json",
+                    "description": "Id of actual payment terms for this invoice. Must be valid payment terms id",
+                    "required": true,
+                    "type": "integer",
+                    "example": 1
+                },
+                "customPaymentTermsDays": {
+                    "location": "json",
+                    "description": "Days for custom payment terms, required for custom payment terms",
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "minimum": 0,
+                    "example": 1
+                },
+                "customerName": {
+                    "location": "json",
+                    "description": "Name of customer on invoice",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Acme inc"
+                },
+                "customerAddress": {
+                    "location": "json",
+                    "description": "Full address of customer on invoice, excluding country",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My street, 42\n2665 Vallensbaek Strand"
+                },
+                "customerCountry": {
+                    "location": "json",
+                    "description": "Country code of customer on invoice. Must be valid country code",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "DK"
+                },
+                "customerCountryName": {
+                    "location": "json",
+                    "description": "Localized name of country for customer on invoice. Calculated by the server based on the value of customerCountry.",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["string", "null"],
+                    "example": "Denmark"
+                },
+                "customerCiNumber": {
+                    "location": "json",
+                    "description": "VAT/Company number of customer on invoice, if an invoice has both this is the Company number",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "10067855"
+                },
+                "customerVatNumber": {
+                    "location": "json",
+                    "description": "The VAT number of customer on invoice",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "currency": {
+                    "location": "json",
+                    "description": "Defines invoice currency. Will be set to the currency valid for your account",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "EUR"
+                },
+                "priceDisplayType": {
+                    "location": "json",
+                    "description": "If set to gross, the price on lines will be displayed as the gross price on the debitoor website, and in PDFs generated. The price saved in lines.unitNetPrice should always be net",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "pattern": "gross|net|noTax",
+                    "example": "gross"
+                },
+                "sent": {
+                    "location": "json",
+                    "description": "Has the invoice been sent by email",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": false
+                },
+                "viewed": {
+                    "location": "json",
+                    "description": "Defines if invoice has been viewed on the portal or not",
+                    "required": false,
+                    "type": ["null", "boolean"]
+                },
+                "creditedInvoiceId": {
+                    "location": "json",
+                    "description": "Original invoice Id for creditNotes",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "creditedInvoiceNumber": {
+                    "location": "json",
+                    "description": "The number of the original invoice for credit notes. Will be looked up from creditedInvoiceId",
+                    "readonly": true,
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "example": 1
+                },
+                "creditedInvoiceDate": {
+                    "location": "json",
+                    "description": "Date of the original invoice for credit notes. Will be looked up from creditedInvoiceId",
+                    "readonly": true,
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "lines": {
+                    "location": "json",
+                    "description": "Array of lines on the invoice",
+                    "required": true,
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "discountRate": {
+                    "location": "json",
+                    "description": "Invoice discount rate, %",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "minimum": 0,
+                    "maximum": 100,
+                    "example": 43
+                },
+                "totalNetAmountBeforeDiscount": {
+                    "location": "json",
+                    "description": "Total net amount before discount(if any) for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalNetDiscountAmount": {
+                    "location": "json",
+                    "description": "Total net discount amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalNetAmount": {
+                    "location": "json",
+                    "description": "Total net amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalTaxAmount": {
+                    "location": "json",
+                    "description": "Total tax amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "taxGroups": {
+                    "location": "json",
+                    "description": "Tax groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "totalNetDeductionAmount": {
+                    "location": "json",
+                    "description": "ES,IC,IT,CO: total Deduction amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "incomeTaxDeductionGroups": {
+                    "location": "json",
+                    "description": "Net deduction groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "totalGrossAmount": {
+                    "location": "json",
+                    "description": "Total amount for invoice. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                }
+            }
+        },
+        "bookDraftInvoice": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/sales/draftinvoices/{draftinvoice_id}/book",
+            "summary": "Book a draft invoice. The draft invoice will validated against the schema at /api/v1.0/schemas/sales/invoice and booked.",
+            "parameters": {
+                "draftinvoice_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "bookAndSendDraftInvoice": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/sales/draftinvoices/{draftinvoice_id}/booksend",
+            "summary": "Short hand endpoint for retrieving a draft, then posting it as an invoice and emailing it as a pdf",
+            "parameters": {
+                "draftinvoice_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "copyDraftInvoice": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/sales/draftinvoices/{draftinvoice_id}/copy",
+            "summary": "Copy draft invoice to a new draft invoice. Returns the new copy. This is a premium feature.",
+            "parameters": {
+                "draftinvoice_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "emailDraftInvoice": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/sales/draftinvoices/{draftinvoice_id}/email",
+            "summary": "sends an email with the invoice as a pdf file",
+            "parameters": {
+                "draftinvoice_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "getDraftInvoicePdf": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/draftinvoices/{draftinvoice_id}/pdf",
+            "summary": "Get invoice as PDF",
+            "parameters": {
+                "draftinvoice_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "getDraftInvoiceThumbnail": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/draftinvoices/{draftinvoice_id}/thumbnail",
+            "summary": "Get invoice as PDF",
+            "parameters": {
+                "draftinvoice_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "validateDraftInvoice": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/sales/draftinvoices/validate",
+            "summary": "Validate draft invoice"
+        }
+    }
+}

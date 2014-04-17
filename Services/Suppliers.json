@@ -1,0 +1,196 @@
+{
+    "name": "Suppliers api",
+    "includes": ["BaseService.json"],
+    "operations": {
+        "getSuppliers": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/suppliers",
+            "summary": "Get list of suppliers."
+        },
+        "createSupplier": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/suppliers",
+            "summary": "Create new supplier.",
+            "parameters": {
+                "autonumber": {
+                    "location": "query",
+                    "description": "If you specify ?autonumber=true in the query string, the supplier will be given a number based on the current value of supplierSettings.lastSupplierNumber, in settings.",
+                    "type": "boolean"
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "name": {
+                    "location": "json",
+                    "description": "The supplier name or company name",
+                    "required": true,
+                    "type": "string",
+                    "example": "John Doe"
+                },
+                "number": {
+                    "location": "json",
+                    "description": "The supplier number",
+                    "required": false,
+                    "type": ["null", "number", "string"],
+                    "example": 1
+                },
+                "address": {
+                    "location": "json",
+                    "description": "Full address of the supplier, excluding country",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "My street, 42\n2665 Vallensbaek Strand"
+                },
+                "phone": {
+                    "location": "json",
+                    "description": "The suppliers telephone number",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "+45 88 20 48 41"
+                },
+                "email": {
+                    "location": "json",
+                    "description": "The suppliers email",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "email",
+                    "pattern": "^$|^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$",
+                    "example": "email@example.com"
+                },
+                "countryCode": {
+                    "location": "json",
+                    "description": "The country code of the suppliers country. Must be a valid country code",
+                    "required": true,
+                    "type": "string",
+                    "example": "DK"
+                },
+                "countryName": {
+                    "location": "json",
+                    "description": "Name of the suppliers country",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "Denmark"
+                },
+                "ciNumber": {
+                    "location": "json",
+                    "description": "The Corporate Identification Number",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "isArchived": {
+                    "location": "json",
+                    "description": "Is the supplier archived",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                }
+            }
+        },
+        "getSupplier": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/suppliers/{supplier_id}",
+            "summary": "Get supplier by ID.",
+            "parameters": {
+                "supplier_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "updateSupplier": {
+            "extends": "abstract.put",
+            "uri": "/api/v1.0/suppliers/{supplier_id}",
+            "summary": "Create new supplier.",
+            "parameters": {
+                "supplier_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "name": {
+                    "location": "json",
+                    "description": "The supplier name or company name",
+                    "required": true,
+                    "type": "string",
+                    "example": "John Doe"
+                },
+                "number": {
+                    "location": "json",
+                    "description": "The supplier number",
+                    "required": false,
+                    "type": ["null", "number", "string"],
+                    "example": 1
+                },
+                "address": {
+                    "location": "json",
+                    "description": "Full address of the supplier, excluding country",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "My street, 42\n2665 Vallensbaek Strand"
+                },
+                "phone": {
+                    "location": "json",
+                    "description": "The suppliers telephone number",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "+45 88 20 48 41"
+                },
+                "email": {
+                    "location": "json",
+                    "description": "The suppliers email",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "email",
+                    "pattern": "^$|^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$",
+                    "example": "email@example.com"
+                },
+                "countryCode": {
+                    "location": "json",
+                    "description": "The country code of the suppliers country. Must be a valid country code",
+                    "required": true,
+                    "type": "string",
+                    "example": "DK"
+                },
+                "countryName": {
+                    "location": "json",
+                    "description": "Name of the suppliers country",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "Denmark"
+                },
+                "ciNumber": {
+                    "location": "json",
+                    "description": "The Corporate Identification Number",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "isArchived": {
+                    "location": "json",
+                    "description": "Is the supplier archived",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                }
+            }
+        },
+        "validateSupplier": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/suppliers/validate",
+            "summary": "Get list of suppliers in CSV format."
+        }
+    }
+}

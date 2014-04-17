@@ -1,0 +1,65 @@
+{
+    "name": "Debitoor api base calls",
+    "apiVersion": "v1.0",
+    "basePath": "https://api.debitoor.com",
+    "operations": {
+        "abstract.debitoor": {
+            "summary": "base calls to debitoor api",
+            "parameters": {
+                "access_token": {
+                    "location": "query",
+                    "description": "Debitoor access token",
+                    "required": true
+                }
+            },
+            "errorResponses": [
+                {
+                    "code": 400,
+                    "phrase": "HTTP Status 400 is returned if you send invalid JSON.",
+                    "class": "string"
+                },
+                {
+                    "code": 401,
+                    "phrase": "HTTP Status 401 (Not authorized) is returned if you fail to do one of the following: Provide a valid access token in the query string: ?access_token=token=ACCESS_TOKEN | Provide a valid access token as an x-token HTTP header",
+                    "class": "string"
+                },
+                {
+                    "code": 404,
+                    "phrase": "The resource could not be found.",
+                    "class": "string"
+                },
+                {
+                    "code": 412,
+                    "phrase": "There was a specific problem with the data you sent. More information is included in the response.",
+                    "class": "string"
+                },
+                {
+                    "code": 500,
+                    "phrase": "All endpoints can also return HTTP Status 500 (Internal server error) if there is a problem on the server.",
+                    "class": "string"
+                }
+            ]
+        },
+        "abstract.get": {
+            "extends": "abstract.debitoor",
+            "summary": "base GET calls to debitoor api",
+            "httpMethod": "GET"
+        },
+        "abstract.post": {
+            "extends": "abstract.debitoor",
+            "summary": "base POST calls to debitoor api",
+            "httpMethod": "POST"
+        },
+        "abstract.put": {
+            "extends": "abstract.debitoor",
+            "summary": "base PUT calls to debitoor api",
+            "httpMethod": "PUT"
+        },
+        "abstract.delete": {
+            "extends": "abstract.debitoor",
+            "summary": "base DELETE calls to debitoor api",
+            "httpMethod": "DELETE"
+        }
+    }
+
+}

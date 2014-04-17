@@ -1,0 +1,672 @@
+{
+    "name": "Quotes api",
+    "includes": ["BaseService.json"],
+    "operations": {
+        "createQuote": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/sales/quotes",
+            "summary": "Create new quote. expand=customer,product Expand associated customer data and/or product data for every line (if available).",
+            "parameters": {
+                "expand": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "lines": {
+                    "location": "json",
+                    "description": "Array of lines on the quote",
+                    "required": true,
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "number": {
+                    "location": "json",
+                    "description": "The number of the quote",
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "example": 1
+                },
+                "customerId": {
+                    "location": "json",
+                    "description": "Id of the customer for this quote. Must be a valid customer id",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "503714a74400b29809000004"
+                },
+                "title": {
+                    "location": "json",
+                    "description": "Title for the quote",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My title"
+                },
+                "paymentTermsId": {
+                    "location": "json",
+                    "description": "Id of actual payment terms for this invoice. Must be valid payment terms id",
+                    "required": true,
+                    "type": "integer",
+                    "example": 1
+                },
+                "customPaymentTermsDays": {
+                    "location": "json",
+                    "description": "Days for custom payment terms, required for custom payment terms",
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "minimal": 0,
+                    "example": 1
+                },
+                "notes": {
+                    "location": "json",
+                    "description": "Notes for the quote",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My note"
+                },
+                "additionalNotes": {
+                    "location": "json",
+                    "description": "Additional quote notes",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Some notes"
+                },
+                "date": {
+                    "location": "json",
+                    "description": "Date of quote",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "dueDate": {
+                    "location": "json",
+                    "description": "Date of quote valid to",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "customerName": {
+                    "location": "json",
+                    "description": "Name of customer on quote",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Acme inc"
+                },
+                "customerAddress": {
+                    "location": "json",
+                    "description": "Full address of customer on quote, excluding country",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My street, 42\n2665 Vallensbaek Strand"
+                },
+                "customerCountry": {
+                    "location": "json",
+                    "description": "Country code of customer on quote. Must be valid country code",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "DK"
+                },
+                "customerCountryName": {
+                    "location": "json",
+                    "description": "Name of country for customer on quote",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "readonly": true,
+                    "example": "Denmark"
+                },
+                "customerCiNumber": {
+                    "location": "json",
+                    "description": "VAT/Company number of customer on quote, if an quote has both this is the Company number",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "10067855"
+                },
+                "customerVatNumber": {
+                    "location": "json",
+                    "description": "The VAT number of customer on quote",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "discountRate": {
+                    "location": "json",
+                    "description": "Quote discount rate, %",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "minimum": 0,
+                    "maximum": 100,
+                    "example": 43
+                },
+                "totalNetAmountBeforeDiscount": {
+                    "location": "json",
+                    "description": "Total net amount before discount(if any) for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalNetDiscountAmount": {
+                    "location": "json",
+                    "description": "Total net discount amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalNetAmount": {
+                    "location": "json",
+                    "description": "Total net amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalTaxAmount": {
+                    "location": "json",
+                    "description": "Total tax amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "taxGroups": {
+                    "location": "json",
+                    "description": "Tax groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "totalNetDeductionAmount": {
+                    "location": "json",
+                    "description": "ES,IC,IT,CO: total Deduction amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "incomeTaxDeductionGroups": {
+                    "location": "json",
+                    "description": "Net deduction groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "totalGrossAmount": {
+                    "location": "json",
+                    "description": "Total amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "currency": {
+                    "location": "json",
+                    "description": "Defines invoice currency. Will be set to the currency valid for your account",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "EUR"
+                },
+                "priceDisplayType": {
+                    "location": "json",
+                    "description": "If set to gross, the price on lines will be displayed as the gross price on the debitoor website, and in PDFs generated. The price saved in lines.unitNetPrice should always be net",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "pattern": "gross|net|noTax",
+                    "example": "gross"
+                },
+                "sent": {
+                    "location": "json",
+                    "description": "Has the quote been sent by email",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": false
+                },
+                "viewed": {
+                    "location": "json",
+                    "description": "Has the offer been viewed by the client",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                },
+                "accepted": {
+                    "location": "json",
+                    "description": "Has the quote been accepted",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": false
+                },
+                "invoiced": {
+                    "location": "json",
+                    "description": "Has the offer been invoiced",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                },
+                "archived": {
+                    "location": "json",
+                    "description": "Has the offer been archived",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                },
+                "state": {
+                    "location": "json",
+                    "description": "The current state of quote",
+                    "readonly": true,
+                    "required": false,
+                    "type": ["null", "string"],
+                    "enum": ["draft", "sent", "viewed", "accepted", "invoiced", "archived"]
+                }
+            }
+        },
+        "getQuote": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/quotes/{quote_id}",
+            "summary": "Get quote by ID. expand=customer,product Expand associated customer data and/or product data for every line (if available).",
+            "parameters": {
+                "quote_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "expand": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
+        },
+        "deleteQuote": {
+            "extends": "abstract.delete",
+            "uri": "/api/v1.0/sales/quotes/{quote_id}",
+            "summary": "Delete quote.",
+            "parameters": {
+                "quote_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "updateQuote": {
+            "extends": "abstract.put",
+            "uri": "/api/v1.0/sales/quotes/{quote_id}",
+            "summary": "Update quote. expand=customer,product Expand associated customer data and/or product data for every line (if available).",
+            "parameters": {
+                "quote_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "expand": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "lines": {
+                    "location": "json",
+                    "description": "Array of lines on the quote",
+                    "required": true,
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "number": {
+                    "location": "json",
+                    "description": "The number of the quote",
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "example": 1
+                },
+                "customerId": {
+                    "location": "json",
+                    "description": "Id of the customer for this quote. Must be a valid customer id",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "503714a74400b29809000004"
+                },
+                "title": {
+                    "location": "json",
+                    "description": "Title for the quote",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My title"
+                },
+                "paymentTermsId": {
+                    "location": "json",
+                    "description": "Id of actual payment terms for this invoice. Must be valid payment terms id",
+                    "required": true,
+                    "type": "integer",
+                    "example": 1
+                },
+                "customPaymentTermsDays": {
+                    "location": "json",
+                    "description": "Days for custom payment terms, required for custom payment terms",
+                    "required": false,
+                    "type": ["null", "integer"],
+                    "minimal": 0,
+                    "example": 1
+                },
+                "notes": {
+                    "location": "json",
+                    "description": "Notes for the quote",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My note"
+                },
+                "additionalNotes": {
+                    "location": "json",
+                    "description": "Additional quote notes",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Some notes"
+                },
+                "date": {
+                    "location": "json",
+                    "description": "Date of quote",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "dueDate": {
+                    "location": "json",
+                    "description": "Date of quote valid to",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "date",
+                    "example": "YYYY-MM-DD"
+                },
+                "customerName": {
+                    "location": "json",
+                    "description": "Name of customer on quote",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "Acme inc"
+                },
+                "customerAddress": {
+                    "location": "json",
+                    "description": "Full address of customer on quote, excluding country",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "My street, 42\n2665 Vallensbaek Strand"
+                },
+                "customerCountry": {
+                    "location": "json",
+                    "description": "Country code of customer on quote. Must be valid country code",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "DK"
+                },
+                "customerCountryName": {
+                    "location": "json",
+                    "description": "Name of country for customer on quote",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "readonly": true,
+                    "example": "Denmark"
+                },
+                "customerCiNumber": {
+                    "location": "json",
+                    "description": "VAT/Company number of customer on quote, if an quote has both this is the Company number",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "10067855"
+                },
+                "customerVatNumber": {
+                    "location": "json",
+                    "description": "The VAT number of customer on quote",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "discountRate": {
+                    "location": "json",
+                    "description": "Quote discount rate, %",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "minimum": 0,
+                    "maximum": 100,
+                    "example": 43
+                },
+                "totalNetAmountBeforeDiscount": {
+                    "location": "json",
+                    "description": "Total net amount before discount(if any) for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalNetDiscountAmount": {
+                    "location": "json",
+                    "description": "Total net discount amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalNetAmount": {
+                    "location": "json",
+                    "description": "Total net amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "totalTaxAmount": {
+                    "location": "json",
+                    "description": "Total tax amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "taxGroups": {
+                    "location": "json",
+                    "description": "Tax groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "totalNetDeductionAmount": {
+                    "location": "json",
+                    "description": "ES,IC,IT,CO: total Deduction amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "incomeTaxDeductionGroups": {
+                    "location": "json",
+                    "description": "Net deduction groups",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "array"]
+                },
+                "totalGrossAmount": {
+                    "location": "json",
+                    "description": "Total amount for quote. This will be re-calculated when posted to the server",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "readonly": true,
+                    "example": 0
+                },
+                "currency": {
+                    "location": "json",
+                    "description": "Defines invoice currency. Will be set to the currency valid for your account",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "EUR"
+                },
+                "priceDisplayType": {
+                    "location": "json",
+                    "description": "If set to gross, the price on lines will be displayed as the gross price on the debitoor website, and in PDFs generated. The price saved in lines.unitNetPrice should always be net",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "pattern": "gross|net|noTax",
+                    "example": "gross"
+                },
+                "sent": {
+                    "location": "json",
+                    "description": "Has the quote been sent by email",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": false
+                },
+                "viewed": {
+                    "location": "json",
+                    "description": "Has the offer been viewed by the client",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                },
+                "accepted": {
+                    "location": "json",
+                    "description": "Has the quote been accepted",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": false
+                },
+                "invoiced": {
+                    "location": "json",
+                    "description": "Has the offer been invoiced",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                },
+                "archived": {
+                    "location": "json",
+                    "description": "Has the offer been archived",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                },
+                "state": {
+                    "location": "json",
+                    "description": "The current state of quote",
+                    "readonly": true,
+                    "required": false,
+                    "type": ["null", "string"],
+                    "enum": ["draft", "sent", "viewed", "accepted", "invoiced", "archived"]
+                }
+            }
+        },
+        "emailQuote": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/sales/quotes/{quote_id}/email",
+            "summary": "Send quote via email.",
+            "parameters": {
+                "quote_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "recipient": {
+                    "location": "json",
+                    "description": "Email of the recipient",
+                    "required": true,
+                    "type": "string",
+                    "format": "email",
+                    "pattern": "^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$",
+                    "example": "email@example.com"
+                },
+                "ccRecipient": {
+                    "location": "json",
+                    "description": "Email of the CC recipient",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "format": "email",
+                    "pattern": "^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$",
+                    "example": "email@example.com"
+                },
+                "subject": {
+                    "location": "json",
+                    "description": "The subject. You can use $[NUMBER] to insert invoice number",
+                    "required": true,
+                    "type": "string",
+                    "minLength": 1
+                },
+                "message": {
+                    "location": "json",
+                    "description": "The message. You can use $[NUMBER] to insert invoice number",
+                    "required": false,
+                    "type": ["string", "null"]
+                },
+                "attachmentName": {
+                    "location": "json",
+                    "description": "Attachment name. You can use $[NUMBER] to insert invoice number",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "minLength": 1
+                },
+                "attachPdf": {
+                    "location": "json",
+                    "description": "Attachment switch. Enable or disable pdf attachment to email",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": false
+                },
+                "copyMail": {
+                    "location": "json",
+                    "description": "Copy to myself switch. Enable or disable sending copy to myself",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": false
+                },
+                "countryCode": {
+                    "location": "json",
+                    "description": "Country code of the recipient. Must be a valid country code known by debitoor if specified. If not specified the current users country will be used. The country code controls the language of the branding of the email (created with debitoor.com), for non-premium users.",
+                    "required": false,
+                    "type": ["string", "null"],
+                    "example": "DE"
+                }
+            }
+        },
+        "getQuotePdf": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/quotes/{quote_id}/pdf",
+            "summary": "Get invoice as PDF",
+            "parameters": {
+                "quote_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "getQuoteThumbnail": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/quotes/{quote_id}/thumbnail",
+            "summary": "Get invoice as PDF",
+            "parameters": {
+                "quote_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        }
+    }
+}

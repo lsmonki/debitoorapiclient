@@ -1,0 +1,260 @@
+{
+    "name": "Products api",
+    "includes": ["BaseService.json"],
+    "operations": {
+        "getProducts": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/products",
+            "summary": "Get list of products.",
+            "parameters": {
+                "fromDate": {
+                    "location": "query",
+                    "summary": "format YYYY-MM-DD",
+                    "type": "string"
+                },
+                "toDate": {
+                    "location": "query",
+                    "summary": "format YYYY-MM-DD",
+                    "type": "string"
+                }
+            }
+        },
+        "createProduct": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/products",
+            "summary": "Create new expense.",
+            "parameters": {
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "name": {
+                    "location": "json",
+                    "description": "Name of product",
+                    "required": true,
+                    "type": "string",
+                    "example": "My product name"
+                },
+                "description": {
+                    "location": "json",
+                    "description": "Description of product",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "exmaple": "My product description"
+                },
+                "unitId": {
+                    "location": "json",
+                    "description": "The id of the units to use by default for this product. Must be a valid unit id",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "example": 1
+                },
+                "netUnitSalesPrice": {
+                    "location": "json",
+                    "description": "Net sales price, if both netUnitSalesPrice and grossUnitSalesPrice is set without specifying calculatedPrice, grossUnitSalesPrice will be calculated and calculatedPrice will be set to 'gross'",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 200
+                },
+                "grossUnitSalesPrice": {
+                    "location": "json",
+                    "description": "Cost price, if both netUnitSalesPrice and grossUnitSalesPrice is set without specifying calculatedPrice, grossUnitSalesPrice will be calculated and calculatedPrice will be set to 'gross'",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 100
+                },
+                "calculatedPrice": {
+                    "location": "json",
+                    "description": "Specify the calculated price: gross or net",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "enum": ["net", "gross"],
+                    "example": "gross"
+                },
+                "rate": {
+                    "location": "json",
+                    "description": "Vat rate for product",
+                    "required": true,
+                    "type": "number",
+                    "maxDecimal": 2,
+                    "minimum": 0,
+                    "maximum": 100,
+                    "example": 21
+                },
+                "taxEnabled": {
+                    "location": "json",
+                    "description": "This product uses taxes",
+                    "required": true,
+                    "type": "boolean",
+                    "example": true
+                },
+                "productOrService": {
+                    "location": "json",
+                    "description": "is this a product or service",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "pattern": "product|service",
+                    "example": "product"
+                },
+                "sku": {
+                    "location": "json",
+                    "description": "SKU",
+                    "required": false,
+                    "type": ["null", "string"]
+                },
+                "netUnitCostPrice": {
+                    "location": "json",
+                    "description": "Cost price",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 100
+                },
+                "isArchived": {
+                    "location": "json",
+                    "description": "Is the product archived",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                }
+            }
+        },
+        "getProduct": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/products/{product_id}",
+            "summary": "Get product by ID.",
+            "parameters": {
+                "product_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "updateProduct": {
+            "extends": "abstract.put",
+            "uri": "/api/v1.0/products/{product_id}",
+            "summary": "Update a product",
+            "parameters": {
+                "product_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "name": {
+                    "location": "json",
+                    "description": "Name of product",
+                    "required": true,
+                    "type": "string",
+                    "example": "My product name"
+                },
+                "description": {
+                    "location": "json",
+                    "description": "Description of product",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "exmaple": "My product description"
+                },
+                "unitId": {
+                    "location": "json",
+                    "description": "The id of the units to use by default for this product. Must be a valid unit id",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "example": 1
+                },
+                "netUnitSalesPrice": {
+                    "location": "json",
+                    "description": "Net sales price, if both netUnitSalesPrice and grossUnitSalesPrice is set without specifying calculatedPrice, grossUnitSalesPrice will be calculated and calculatedPrice will be set to 'gross'",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 200
+                },
+                "grossUnitSalesPrice": {
+                    "location": "json",
+                    "description": "Cost price, if both netUnitSalesPrice and grossUnitSalesPrice is set without specifying calculatedPrice, grossUnitSalesPrice will be calculated and calculatedPrice will be set to 'gross'",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 100
+                },
+                "calculatedPrice": {
+                    "location": "json",
+                    "description": "Specify the calculated price: gross or net",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "enum": ["net", "gross"],
+                    "example": "gross"
+                },
+                "rate": {
+                    "location": "json",
+                    "description": "Vat rate for product",
+                    "required": true,
+                    "type": "number",
+                    "maxDecimal": 2,
+                    "minimum": 0,
+                    "maximum": 100,
+                    "example": 21
+                },
+                "taxEnabled": {
+                    "location": "json",
+                    "description": "This product uses taxes",
+                    "required": true,
+                    "type": "boolean",
+                    "example": true
+                },
+                "productOrService": {
+                    "location": "json",
+                    "description": "is this a product or service",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "pattern": "product|service",
+                    "example": "product"
+                },
+                "sku": {
+                    "location": "json",
+                    "description": "SKU",
+                    "required": false,
+                    "type": ["null", "string"]
+                },
+                "netUnitCostPrice": {
+                    "location": "json",
+                    "description": "Cost price",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "maxDecimal": 2,
+                    "example": 100
+                },
+                "isArchived": {
+                    "location": "json",
+                    "description": "Is the product archived",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                }
+            }
+        },
+        "exportProducts": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/products/export.csv",
+            "summary": "Export products as csv"
+        },
+        "validateProduct": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/products/validate",
+            "summary": "Validate product object."
+        }
+    }
+}

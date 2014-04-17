@@ -1,0 +1,43 @@
+{
+    "name": "Utils api",
+    "includes": ["BaseService.json"],
+    "operations": {
+        "getCountries": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/countries",
+            "summary": "Get sorted list of countries translated to the current user's language"
+        },
+        "getTranslatedCountries": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/countries/{languagecode}",
+            "summary": "Get sorted list of countries translated to the specified language",
+            "parameters": {
+                "languagecode": {
+                    "location": "uri",
+                    "description": "Language code",
+                    "required": true
+                }
+            }
+        },
+        "getPaymentTerms": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/paymentterms",
+            "summary": "Get payment terms"
+        },
+        "getTaxRates": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/paymentterms",
+            "summary": "Get tax rates"
+        },
+        "getUnits": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/units",
+            "summary": "Get unit list"
+        },
+        "getExpensesCategories": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/expenses/categories",
+            "summary": "Get customer by ID."
+        }
+    }
+}

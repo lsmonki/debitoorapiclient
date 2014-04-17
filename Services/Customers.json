@@ -1,0 +1,257 @@
+{
+    "name": "Customers api",
+    "includes": ["BaseService.json"],
+    "operations": {
+        "getCustomers": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/customers",
+            "summary": "Get list of customers."
+        },
+        "createCustomer": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/customers",
+            "summary": "Create new customer.",
+            "parameters": {
+                "autonumber": {
+                    "location": "query",
+                    "description": "If you specify ?autonumber=true in the query string, the customer will be given a number based on the current value of customerSettings.lastCustomerNumber, in settings.",
+                    "type": "boolean"
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "name": {
+                    "location": "json",
+                    "description": "The customers name or company name",
+                    "required": true,
+                    "type": "string",
+                    "example": "John Doe"
+                },
+                "number": {
+                    "location": "json",
+                    "description": "The customers number",
+                    "required": false,
+                    "type": ["null", "number", "string"],
+                    "example": 1
+                },
+                "address": {
+                    "location": "json",
+                    "description": "Full address of the customer, excluding country",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "My street, 42\n2665 Vallensbaek Strand"
+                },
+                "phone": {
+                    "location": "json",
+                    "description": "The customers telephone number",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "+45 88 20 48 41"
+                },
+                "email": {
+                    "location": "json",
+                    "description": "The customers email",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "email",
+                    "pattern": "^$|^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$",
+                    "example": "email@example.com"
+                },
+                "homepage": {
+                    "location": "json",
+                    "description": "The customers home page",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "www.example.com"
+                },
+                "ciNumber": {
+                    "location": "json",
+                    "description": "VAT/Company number of the customer, if a customer has both this is the Company number",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "vatNumber": {
+                    "location": "json",
+                    "description": "The VAT number of the customer",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "paymentTermsId": {
+                    "location": "json",
+                    "description": "The ID of the default payment terms for customer, must be a valid Id",
+                    "required": true,
+                    "type": ["integer"],
+                    "example": 1
+                },
+                "customPaymentTermsDays": {
+                    "location": "json",
+                    "description": "Days for custom payment terms, required for custom payment terms",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "example": 1
+                },
+                "countryCode": {
+                    "location": "json",
+                    "description": "The country code of the customers country. Must be a valid country code",
+                    "required": true,
+                    "type": "string",
+                    "example": "DK"
+                },
+                "countryName": {
+                    "location": "json",
+                    "description": "Name of the customers country",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "Denmark"
+                },
+                "isArchived": {
+                    "location": "json",
+                    "description": "Is the customer archived",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                }
+            }
+        },
+        "getCustomer": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/customers/{customer_id}",
+            "summary": "Get customer by ID.",
+            "parameters": {
+                "customer_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
+        "updateCustomer": {
+            "extends": "abstract.put",
+            "uri": "/api/v1.0/customers/{customer_id}",
+            "summary": "Create new customer.",
+            "parameters": {
+                "customer_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "id": {
+                    "location": "json",
+                    "description": "id",
+                    "required": false,
+                    "readonly": true,
+                    "type": ["null", "string"],
+                    "example": "503714a74400b29809000004"
+                },
+                "name": {
+                    "location": "json",
+                    "description": "The customers name or company name",
+                    "required": true,
+                    "type": "string",
+                    "example": "John Doe"
+                },
+                "number": {
+                    "location": "json",
+                    "description": "The customers number",
+                    "required": false,
+                    "type": ["null", "number", "string"],
+                    "example": 1
+                },
+                "address": {
+                    "location": "json",
+                    "description": "Full address of the customer, excluding country",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "My street, 42\n2665 Vallensbaek Strand"
+                },
+                "phone": {
+                    "location": "json",
+                    "description": "The customers telephone number",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "+45 88 20 48 41"
+                },
+                "email": {
+                    "location": "json",
+                    "description": "The customers email",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "format": "email",
+                    "pattern": "^$|^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$",
+                    "example": "email@example.com"
+                },
+                "homepage": {
+                    "location": "json",
+                    "description": "The customers home page",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "www.example.com"
+                },
+                "ciNumber": {
+                    "location": "json",
+                    "description": "VAT/Company number of the customer, if a customer has both this is the Company number",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "vatNumber": {
+                    "location": "json",
+                    "description": "The VAT number of the customer",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "10067855"
+                },
+                "paymentTermsId": {
+                    "location": "json",
+                    "description": "The ID of the default payment terms for customer, must be a valid Id",
+                    "required": true,
+                    "type": ["integer"],
+                    "example": 1
+                },
+                "customPaymentTermsDays": {
+                    "location": "json",
+                    "description": "Days for custom payment terms, required for custom payment terms",
+                    "required": false,
+                    "type": ["null", "number"],
+                    "example": 1
+                },
+                "countryCode": {
+                    "location": "json",
+                    "description": "The country code of the customers country. Must be a valid country code",
+                    "required": true,
+                    "type": "string",
+                    "example": "DK"
+                },
+                "countryName": {
+                    "location": "json",
+                    "description": "Name of the customers country",
+                    "required": false,
+                    "type": ["null", "string"],
+                    "example": "Denmark"
+                },
+                "isArchived": {
+                    "location": "json",
+                    "description": "Is the customer archived",
+                    "required": false,
+                    "type": ["null", "boolean"],
+                    "example": true
+                }
+            }
+        },
+        "getCustomersCsvExport": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/customers/export.csv",
+            "summary": "Get list of customers in CSV format."
+        },
+        "validateCustomer": {
+            "extends": "abstract.post",
+            "uri": "/api/v1.0/customers/validate",
+            "summary": "Get list of customers in CSV format."
+        }
+    }
+}
