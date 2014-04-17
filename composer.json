@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Kairos\\DebitoorApiClient": ""
+            "Kairos\\DebitoorApiClient\\": ""
         }
     }
 }
