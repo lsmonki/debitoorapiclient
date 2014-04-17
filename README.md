@@ -35,15 +35,27 @@ $customerService->getCustomers();
 $customerService->getCustomer(array('customer_id' => 'your customer id'));
 
 
-// get customer by id
+// create customer
 $customerService->createCustomer(
+    array(
+        'name'          => 'your customer name',
+        'address'       => 'customer address',
+        'email'         => 'customer@debitoor',
+        'phone'         => '000-000-00-00',
+        ...
+    )
+);
+
+
+// update customer
+$customerService->updateCustomer(
     array(
         'customer_id'   => 'your customer id',
         'name'          => 'your customer name',
         'address'       => 'customer address',
         'email'         => 'customer@debitoor',
-        'phone'         => '000-000-00-00'
+        'phone'         => '000-000-00-00',
+        ...
     )
 );
-
 ```
