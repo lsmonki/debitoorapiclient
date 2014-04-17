@@ -2,6 +2,17 @@
     "name": "Draft invoices api",
     "includes": ["BaseService.json"],
     "operations": {
+        "getDraftInvoices": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/draftinvoices",
+            "summary": "Get draft invoices.",
+            "parameters": {
+                "expand": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
+        },
         "createDraftInvoice": {
             "extends": "abstract.post",
             "uri": "/api/v1.0/sales/draftinvoices",

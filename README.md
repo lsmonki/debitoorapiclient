@@ -1,4 +1,5 @@
 debitoorapiclient
 =================
 
-Debitoor php api clent library
+Debitoor php api clent library,
+Work in progress

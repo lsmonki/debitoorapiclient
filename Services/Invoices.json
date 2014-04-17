@@ -2,6 +2,17 @@
     "name": "Invoices api",
     "includes": ["BaseService.json"],
     "operations": {
+        "getInvoices": {
+            "extends": "abstract.get",
+            "uri": "/api/v1.0/sales/invoices",
+            "summary": "Get booked invoices.",
+            "parameters": {
+                "expand": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
+        },
         "getInvoice": {
             "extends": "abstract.get",
             "uri": "/api/v1.0/sales/invoices/{invoice_id}",
