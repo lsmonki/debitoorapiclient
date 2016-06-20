@@ -59,7 +59,7 @@
                     "required": false,
                     "type": ["null", "string"],
                     "format": "email",
-                    "pattern": "^$|^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$",
+                    "pattern": "/^$|^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$/",
                     "example": "email@example.com"
                 },
                 "homepage": {
@@ -182,7 +182,7 @@
                     "required": false,
                     "type": ["null", "string"],
                     "format": "email",
-                    "pattern": "^$|^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$",
+                    "pattern": "/^$|^[A-Za-z0-9\\._%\\+\\-]+@(?:[A-Za-z0-9\\-]+\\.)+[A-Za-z]{2,6}$/",
                     "example": "email@example.com"
                 },
                 "homepage": {
