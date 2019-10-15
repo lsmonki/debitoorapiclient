@@ -55,7 +55,7 @@ class DebitoorApiClient extends Client
      *
      * @param $service
      * @param array $config
-     * @return ZohoInvoiceApiClient
+     * @return self
      */
     public static function getService($service, $config = array()) {
         return self::factory(array_merge($config, array('service_definition' => $service)));
