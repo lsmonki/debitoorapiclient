@@ -1,5 +1,5 @@
 {
-    "name": "kairos/debitoorapiclient",
+    "name": "sharis-gmbh/debitoorapiclient",
     "description": "Provides an implementation of the debitoor api in a php client",
     "type": "library",
     "license": "MIT",
