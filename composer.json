@@ -1,5 +1,5 @@
 {
-    "name": "sharis-gmbh/debitoorapiclient",
+    "name": "lsmonki/debitoorapiclient",
     "description": "Provides an implementation of the debitoor api in a php client",
     "type": "library",
     "license": "MIT",
