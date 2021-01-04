@@ -4,10 +4,86 @@
     "operations": {
         "getInvoices": {
             "extends": "abstract.get",
-            "uri": "/api/v1.0/sales/invoices",
+            "uri": "/api/sales/invoices/v8",
             "summary": "Get booked invoices.",
             "parameters": {
-                "expand": {
+                "number": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "reference": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "isUnpaid": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "isCreditNote": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "customerId": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "isEInvoiceRejected": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "isEInvoiceAccepted": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "einvoiceStatus": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "overdue": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "paid": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "viewed": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "sent": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "recurring": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedSince": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedBefore": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "includeDeleted": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "skip": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "limit": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "fromDate": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "toDate": {
                     "location": "query",
                     "type": "string"
                 }
@@ -23,6 +99,93 @@
                     "required": true
                 },
                 "expand": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
+        },
+        "getInvoicesHeaders": {
+            "extends": "abstract.get",
+            "uri": "/api/sales/invoices/headers/v8",
+            "summary": "Get booked invoices headers.",
+            "parameters": {
+                "number": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "reference": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "isUnpaid": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "isCreditNote": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "customerId": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "isEInvoiceRejected": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "isEInvoiceAccepted": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "einvoiceStatus": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "overdue": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "paid": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "viewed": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "sent": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "recurring": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedSince": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedBefore": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "includeDeleted": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "skip": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "limit": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "fromDate": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "toDate": {
                     "location": "query",
                     "type": "string"
                 }
