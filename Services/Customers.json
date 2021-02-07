@@ -4,8 +4,42 @@
     "operations": {
         "getCustomers": {
             "extends": "abstract.get",
-            "uri": "/api/v1.0/customers",
-            "summary": "Get list of customers."
+            "uri": "/api/customers/v2",
+            "summary": "Get list of customers.",
+            "parameters": {
+                "email": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "reference": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "groupId": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "archived": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedSince": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedBefore": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "skip": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "limit": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
         },
         "createCustomer": {
             "extends": "abstract.post",

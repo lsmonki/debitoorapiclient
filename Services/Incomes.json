@@ -1,0 +1,50 @@
+{
+    "name": "Incomes api",
+    "includes": ["BaseService.json"],
+    "operations": {
+        "getIncome": {
+            "extends": "abstract.get",
+            "uri": "/api/income/v2",
+            "summary": "Get list of incomes",
+            "parameters": {
+
+                "isUnpaid": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "categoryId": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedSince": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedBefore": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "includeDeleted": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "skip": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "limit": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "fromDate": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "toDate": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

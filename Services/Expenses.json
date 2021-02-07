@@ -4,17 +4,63 @@
     "operations": {
         "getExpenses": {
             "extends": "abstract.get",
-            "uri": "/api/v1.0/expenses",
+            "uri": "/api/expenses/v5",
             "summary": "Get list of expenses. To only get entities after or on a specific date use query string fromDate=YYYY-MM-DD. To only get entities from before or on a date use query string toDate=YYYY-MM-DD.",
             "parameters": {
+                "isUnpaid": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "unpaid": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "paid": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "grossAmount": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "categories": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "missingDetails": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "supplierId": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedSince": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "changedBefore": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "includeDeleted": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "skip": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "limit": {
+                    "location": "query",
+                    "type": "string"
+                },
                 "fromDate": {
                     "location": "query",
-                    "summary": "format YYYY-MM-DD",
                     "type": "string"
                 },
                 "toDate": {
                     "location": "query",
-                    "summary": "format YYYY-MM-DD",
                     "type": "string"
                 }
             }

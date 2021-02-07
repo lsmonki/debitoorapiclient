@@ -4,7 +4,7 @@
     "operations": {
         "getCountries": {
             "extends": "abstract.get",
-            "uri": "/api/v1.0/countries",
+            "uri": "/api/countries/v1",
             "summary": "Get sorted list of countries translated to the current user's language"
         },
         "getTranslatedCountries": {
