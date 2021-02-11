@@ -1,0 +1,91 @@
+{
+    "name": "Payments api",
+    "includes": ["BaseService.json"],
+    "operations": {
+        "getPaymentAccounts": {
+            "extends": "abstract.get",
+            "uri": "/api/paymentaccounts/v1",
+            "summary": "Get list of saved payment accounts\n",
+            "parameters": {
+                "archived": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
+        },
+        "getPaymentsByAccount": {
+            "extends": "abstract.get",
+            "uri": "/api/paymentaccounts/{account_id}/payments/v1",
+            "summary": "Get list of saved payment accounts\n",
+            "parameters": {
+                "account_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "limit": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "fromDate": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "toDate": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
+        },
+        "getTransactionsByAccount": {
+            "extends": "abstract.get",
+            "uri": "/api/paymentaccounts/{account_id}/transactions/v1",
+            "summary": "Get list of bank transactions.\n",
+            "parameters": {
+                "account_id": {
+                    "location": "uri",
+                    "required": true
+                },
+                "fromAmount": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "toAmount": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "matched": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "unmatched": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "private": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "search": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "limit": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "skip": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "fromDate": {
+                    "location": "query",
+                    "type": "string"
+                },
+                "toDate": {
+                    "location": "query",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
