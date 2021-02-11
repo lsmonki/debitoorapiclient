@@ -91,7 +91,7 @@
         },
         "getInvoice": {
             "extends": "abstract.get",
-            "uri": "/api/v1.0/sales/invoices/{invoice_id}",
+            "uri": "/api/sales/invoices/{invoice_id}/v8",
             "summary": "Get booked invoice by ID. expand=customer,product Expand associated customer data and/or product data for every line (if available).",
             "parameters": {
                 "invoice_id": {

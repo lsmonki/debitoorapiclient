@@ -208,7 +208,7 @@
         },
         "getExpense": {
             "extends": "abstract.get",
-            "uri": "/api/v1.0/expenses/{expense_id}",
+            "uri": "/api/expenses/{expense_id}/v5",
             "summary": "Get customer by ID.",
             "parameters": {
                 "expense_id": {
