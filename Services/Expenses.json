@@ -380,6 +380,11 @@
             "extends": "abstract.get",
             "uri": "/api/v1.0/expenses/export.csv",
             "summary": "Export expenses as csv"
+        },
+        "getCategories": {
+            "extends": "abstract.get",
+            "uri": "/api/expenses/categories/v1",
+            "summary": "Get Categories"
         }
     }
 }
