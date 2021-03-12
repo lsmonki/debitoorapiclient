@@ -4,7 +4,7 @@
     "operations": {
         "getDraftInvoices": {
             "extends": "abstract.get",
-            "uri": "/api/v1.0/sales/draftinvoices",
+            "uri": "/api/sales/draftinvoices/v8",
             "summary": "Get draft invoices.",
             "parameters": {
                 "expand": {

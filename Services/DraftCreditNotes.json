@@ -1,0 +1,23 @@
+{
+  "name": "Draft Credit Notes api",
+  "includes": ["BaseService.json"],
+  "operations": {
+    "getDraftCreditNotes": {
+      "extends": "abstract.get",
+      "uri": "/api/sales/draftcreditnotes/v4",
+      "summary": "Get list of Draft Credit Notes.",
+      "parameters": {
+        "fromDate": {
+          "location": "query",
+          "summary": "format YYYY-MM-DD",
+          "type": "string"
+        },
+        "toDate": {
+          "location": "query",
+          "summary": "format YYYY-MM-DD",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -13,6 +13,17 @@
                 }
             }
         },
+        "getQuotesByCustomer": {
+            "extends": "abstract.get",
+            "uri": "/api/customers/{customer_id}/quotes/v6",
+            "summary": "Get quotes by customer.",
+            "parameters": {
+                "customer_id": {
+                    "location": "uri",
+                    "required": true
+                }
+            }
+        },
         "createQuote": {
             "extends": "abstract.post",
             "uri": "/api/v1.0/sales/quotes",

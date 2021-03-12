@@ -1,0 +1,23 @@
+{
+  "name": "Delivery Notes api",
+  "includes": ["BaseService.json"],
+  "operations": {
+    "getDeliveryNotes": {
+      "extends": "abstract.get",
+      "uri": "/api/sales/deliverynotes/v3",
+      "summary": "Get list of Delivery Notes.",
+      "parameters": {
+        "fromDate": {
+          "location": "query",
+          "summary": "format YYYY-MM-DD",
+          "type": "string"
+        },
+        "toDate": {
+          "location": "query",
+          "summary": "format YYYY-MM-DD",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

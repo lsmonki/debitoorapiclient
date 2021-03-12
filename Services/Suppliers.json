@@ -4,7 +4,7 @@
     "operations": {
         "getSuppliers": {
             "extends": "abstract.get",
-            "uri": "/api/v1.0/suppliers",
+            "uri": "/api/suppliers/v1",
             "summary": "Get list of suppliers."
         },
         "createSupplier": {

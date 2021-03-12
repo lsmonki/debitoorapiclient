@@ -4,7 +4,7 @@
     "operations": {
         "getProducts": {
             "extends": "abstract.get",
-            "uri": "/api/v1.0/products",
+            "uri": "/api/products/v1",
             "summary": "Get list of products.",
             "parameters": {
                 "fromDate": {
